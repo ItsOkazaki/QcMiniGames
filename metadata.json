@@ -1,0 +1,6 @@
+{
+  "name": "Mostapha Mini-Games",
+  "description": "A modular hand-tracking game platform featuring Fruit Ninja, Pong, Gesture Recognition, and Steering Control.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["hand-tracking", "game-engine", "3d-graphics"]
+}

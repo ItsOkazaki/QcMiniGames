@@ -21,7 +21,7 @@ const Vehicle = ({ handData, onScore }: VehicleProps) => {
     let targetRotation = 0;
 
     // Dual hand steering logic
-    if (handData.length >= 2) {
+    if (handData && handData.length >= 2) {
       const left = handData.find(h => h.handedness === 'Right') || handData[0];
       const right = handData.find(h => h.handedness === 'Left') || handData[1];
 

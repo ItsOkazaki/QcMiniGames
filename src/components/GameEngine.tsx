@@ -32,6 +32,11 @@ export const GameEngine: React.FC<GameEngineProps> = ({ game }) => {
     return () => observer.disconnect();
   }, []);
 
+  const handDataRef = useRef(handData);
+  useEffect(() => {
+    handDataRef.current = handData;
+  }, [handData]);
+
   // Initialize and run the 2D game loop if it's a 2D game
   useEffect(() => {
     if (game.id === 'steering') return;
@@ -39,7 +44,7 @@ export const GameEngine: React.FC<GameEngineProps> = ({ game }) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Update canvas size directly to avoid laggy state updates for the context
+    // Update canvas size directly
     canvas.width = dimensions.width;
     canvas.height = dimensions.height;
 
@@ -61,9 +66,9 @@ export const GameEngine: React.FC<GameEngineProps> = ({ game }) => {
       // Clear
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Update & Draw
+      // Update & Draw using ref for latest hand data
       if (gameInstance) {
-        gameInstance.update(handData);
+        gameInstance.update(handDataRef.current);
         gameInstance.draw(ctx);
       }
 
@@ -76,7 +81,7 @@ export const GameEngine: React.FC<GameEngineProps> = ({ game }) => {
       cancelAnimationFrame(animationId);
       if (gameInstance?.cleanup) gameInstance.cleanup();
     };
-  }, [game.id, handData, dimensions]);
+  }, [game.id, dimensions]); // Removed handData from dependencies
 
   if (isLoading) {
     return (
